@@ -1,14 +1,7 @@
-FROM ubuntu:18.04
-ARG PB_VER=3.11.4
+FROM alpine:3.11.5
 ENV GOOGLEAPIS_DIR=/googleapis
 RUN cd /tmp && \
-    apt-get update && \
-    apt-get install -y curl unzip git && \
+    apk --update --no-cache add git protoc=3.11.2-r1 && \
     git clone https://github.com/googleapis/googleapis.git && \
-    mv googleapis / && \
-    curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v${PB_VER}/protoc-${PB_VER}-linux-x86_64.zip && \
-    unzip protoc-${PB_VER}-linux-x86_64.zip && \
-    mv bin/ /usr/local/ && \
-    mv include/ /usr/local/ && \
-    rm -f *
+    mv googleapis /
 CMD [ "protoc", "--version" ]
